@@ -3,9 +3,10 @@ import { fetchAllUpComingMovies } from "../network";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { MovieCard } from "../components";
 import { IResponse } from "../types/movei.type";
+import { useEffect, useRef } from "react";
 
 const Home = () => {
-  const { data /* fetchNextPage */ } = useInfiniteQuery<IResponse>({
+  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery<IResponse>({
     queryKey: ["upcoming-movies"],
     getNextPageParam: (lastPage) => {
       const { page, total_pages } = (lastPage as any).data;
@@ -14,9 +15,32 @@ const Home = () => {
     queryFn: ({ pageParam = 1 }) => fetchAllUpComingMovies(pageParam),
   });
 
+  const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!hasNextPage) {
+      return;
+    }
+    const observer = new IntersectionObserver((entries) =>
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          fetchNextPage();
+        }
+      })
+    );
+    const el = loadMoreButtonRef && loadMoreButtonRef.current;
+    if (!el) {
+      return;
+    }
+    observer.observe(el);
+    return () => {
+      observer.unobserve(el);
+    };
+  }, [loadMoreButtonRef.current, hasNextPage]);
+
   return (
     <div className="">
-      <div className="w-[90%] mx-auto grid grid-rows-3 grid-cols-7 gap-5 pb-8">
+      <div className="w-[60%] mx-auto grid grid-rows-4 grid-cols-5 gap-5 pb-8">
         {!!data &&
           data.pages.map((page: any) => (
             <Fragment key={page.data.page}>
@@ -28,9 +52,12 @@ const Home = () => {
             </Fragment>
           ))}
       </div>
-      {/* <button type="button" onClick={() => fetchNextPage()}>
-        fetch
-      </button> */}
+      <button
+        ref={loadMoreButtonRef}
+        type="button"
+        onClick={() => fetchNextPage()}
+        style={{ visibility: "hidden" }}
+      ></button>
     </div>
   );
 };
