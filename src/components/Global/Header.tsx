@@ -1,6 +1,6 @@
 import { AiFillHome } from "react-icons/ai";
 import { SearchComponent } from "..";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
@@ -11,7 +11,9 @@ const Header = () => {
       ) : (
         <SearchComponent />
       )}
-      <AiFillHome size={25} className="cursor-pointer" />
+      <Link to={"/"}>
+        <AiFillHome size={25} className="cursor-pointer" />
+      </Link>
     </header>
   );
 };
