@@ -20,7 +20,12 @@ const addMovieToSelectedState = (
   state.currMovie = movie;
 };
 
+const search = (state: IInitialState, actions: PayloadAction<string>) => {
+  const searchState = actions.payload;
+  state.searchState = searchState;
+};
+
 // Exporting all actions
-const reducerActions = { initializeList, addMovieToSelectedState };
+const reducerActions = { initializeList, addMovieToSelectedState, search };
 
 export default reducerActions;

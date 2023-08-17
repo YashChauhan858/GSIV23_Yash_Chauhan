@@ -5,4 +5,5 @@ import { IInitialState } from "../../../types/redux.type";
 export const initialState: IInitialState = {
   list: [],
   currMovie: null,
+  searchState: "",
 };

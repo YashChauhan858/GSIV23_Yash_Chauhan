@@ -23,8 +23,12 @@ const applicationSlice = createSlice({
  * - Action creators for each of the different functions defined in the reducer field
  */
 // Exporting actions
-export const { initializeList, addMovieToSelectedState, resetCurrMovieState } =
-  applicationSlice.actions;
+export const {
+  initializeList,
+  addMovieToSelectedState,
+  resetCurrMovieState,
+  search,
+} = applicationSlice.actions;
 
 // Exporting reducer
 export default applicationSlice.reducer;
