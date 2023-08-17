@@ -2,13 +2,13 @@ import { Fragment } from "react";
 import { fetchAllUpComingMovies } from "../network";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { MovieCard, SearchComponent } from "../components";
+import { AiFillHome } from "react-icons/ai";
 
 const Home = () => {
   const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["upcoming-movies"],
     getNextPageParam: (lastPage) => {
       const { page, total_pages } = (lastPage as any).data;
-      console.log({ page });
       return page < total_pages ? page + 1 : undefined;
     },
     queryFn: ({ pageParam = 1 }) => fetchAllUpComingMovies(pageParam),
@@ -18,8 +18,9 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
-      <div>
+      <div className="p-2 flex justify-between items-center px-5">
         <SearchComponent />
+        <AiFillHome size={25} />
       </div>
       <div>
         {!!data &&
