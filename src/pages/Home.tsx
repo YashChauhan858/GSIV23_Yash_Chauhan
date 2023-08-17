@@ -2,9 +2,10 @@ import { Fragment } from "react";
 import { fetchAllUpComingMovies } from "../network";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { MovieCard } from "../components";
+import { IResponse } from "../types/movei.type";
 
 const Home = () => {
-  const { data /* fetchNextPage */ } = useInfiniteQuery({
+  const { data /* fetchNextPage */ } = useInfiniteQuery<IResponse>({
     queryKey: ["upcoming-movies"],
     getNextPageParam: (lastPage) => {
       const { page, total_pages } = (lastPage as any).data;
@@ -12,8 +13,6 @@ const Home = () => {
     },
     queryFn: ({ pageParam = 1 }) => fetchAllUpComingMovies(pageParam),
   });
-
-  console.log({ data });
 
   return (
     <div className="">

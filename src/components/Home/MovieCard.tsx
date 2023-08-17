@@ -1,6 +1,7 @@
 import { env } from "../../environment";
+import { IMovie } from "../../types/movei.type";
 
-const MovieCard = ({ movie }: { movie: any }) => {
+const MovieCard = ({ movie }: { movie: IMovie }) => {
   return (
     <div className="w-44 rounded-md shadow-md shadow-[rgba(0,0,0,0.5)] cursor-pointer group">
       <div className="h-40 overflow-hidden">
