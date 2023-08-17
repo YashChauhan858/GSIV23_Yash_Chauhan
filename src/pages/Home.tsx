@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { fetchAllUpComingMovies } from "../network";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { MovieCard } from "../components";
+import { MovieCard, SearchComponent } from "../components";
 
 const Home = () => {
   const { data, fetchNextPage } = useInfiniteQuery({
@@ -18,16 +18,21 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
-      {!!data &&
-        data.pages.map((page: any) => (
-          <Fragment key={page.data.page}>
-            {!!page &&
-              page.data.results.length !== 0 &&
-              page.data.results.map((movie: any) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-          </Fragment>
-        ))}
+      <div>
+        <SearchComponent />
+      </div>
+      <div>
+        {!!data &&
+          data.pages.map((page: any) => (
+            <Fragment key={page.data.page}>
+              {!!page &&
+                page.data.results.length !== 0 &&
+                page.data.results.map((movie: any) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+            </Fragment>
+          ))}
+      </div>
       <button type="button" onClick={() => fetchNextPage()}>
         fetch
       </button>
