@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import customerManagementSlice from "./Features/customerManagementSlice/applicationSlice";
+import applicationSlice from "./Features/applicationSlice/applicationSlice";
 
 /**
  * @configureStore is a wrapper around redux createStore function and automatically sets up a
@@ -11,7 +11,7 @@ import customerManagementSlice from "./Features/customerManagementSlice/applicat
 
 export const store = configureStore({
   reducer: {
-    customerManagementSlice: customerManagementSlice,
+    applicationSlice: applicationSlice,
   },
 });
 

@@ -1,3 +1,8 @@
 /** This file holds initial state for campaign module */
 
-export const initialState = {};
+import { IInitialState } from "../../../types/redux.type";
+
+export const initialState: IInitialState = {
+  list: [],
+  currMovie: null,
+};
