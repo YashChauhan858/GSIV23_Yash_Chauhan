@@ -10,6 +10,12 @@ import { Selector } from "../store";
 const Home = () => {
   const dispatch = useDispatch();
   const list = Selector((state) => state.applicationSlice.list);
+  const searchState = Selector((state) => state.applicationSlice.searchState);
+
+  const validList =
+    list.filter((e) =>
+      e.title.toLocaleLowerCase().includes(searchState.toLocaleLowerCase())
+    ) ?? [];
 
   const { hasNextPage, fetchNextPage } = useInfiniteQuery<IResponse>({
     queryKey: ["upcoming-movies"],
@@ -50,9 +56,11 @@ const Home = () => {
   return (
     <div className="">
       <div className="w-[60%] mx-auto grid grid-rows-4 grid-cols-5 gap-5 pb-8">
-        {!!list &&
-          list.length !== 0 &&
-          list.map((movie: any) => <MovieCard key={movie.id} movie={movie} />)}
+        {!!validList &&
+          validList.length !== 0 &&
+          validList.map((movie: any) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
       </div>
       <button
         ref={loadMoreButtonRef}
