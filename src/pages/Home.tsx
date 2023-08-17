@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { initializeList } from "../store/Features/applicationSlice/applicationSlice";
 import { useDispatch } from "react-redux";
 import { Selector } from "../store";
+import { BiLoaderAlt } from "react-icons/bi";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,19 +19,20 @@ const Home = () => {
 
   const validList = filteredList.length !== 0 ? filteredList : [];
 
-  const { hasNextPage, fetchNextPage } = useInfiniteQuery<IResponse>({
-    queryKey: ["upcoming-movies"],
-    getNextPageParam: (lastPage) => {
-      const { page, total_pages } = (lastPage as any).data;
-      return page < total_pages ? page + 1 : undefined;
-    },
-    refetchOnWindowFocus: false,
-    queryFn: ({ pageParam = 1 }) => fetchAllUpComingMovies(pageParam),
-    onSuccess: (data) => {
-      if (data.pages.at(-1))
-        dispatch(initializeList(data?.pages?.at(-1)?.data?.results ?? []));
-    },
-  });
+  const { hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery<IResponse>({
+      queryKey: ["upcoming-movies"],
+      getNextPageParam: (lastPage) => {
+        const { page, total_pages } = (lastPage as any).data;
+        return page < total_pages ? page + 1 : undefined;
+      },
+      refetchOnWindowFocus: false,
+      queryFn: ({ pageParam = 1 }) => fetchAllUpComingMovies(pageParam),
+      onSuccess: (data) => {
+        if (data.pages.at(-1))
+          dispatch(initializeList(data?.pages?.at(-1)?.data?.results ?? []));
+      },
+    });
 
   const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -64,6 +66,14 @@ const Home = () => {
             <MovieCard key={movie.id} movie={movie} />
           ))}
       </div>
+      {isFetchingNextPage && (
+        <div className="text-lg w-full pb-10 flex justify-center items-center">
+          <p className="flex items-center gap-2">
+            Loading
+            <BiLoaderAlt size={25} className="animate-spin" />
+          </p>
+        </div>
+      )}
       <button
         ref={loadMoreButtonRef}
         type="button"
