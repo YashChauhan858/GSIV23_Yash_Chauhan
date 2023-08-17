@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./initialState";
 import reducerActions from "./action";
+import { IInitialState } from "../../../types/redux.type";
 
 const applicationSlice = createSlice({
   // Used for referencing the slice
@@ -8,7 +9,12 @@ const applicationSlice = createSlice({
   // like planogram/<name of the function we define inside reducer object>
   name: "applicationState",
   initialState,
-  reducers: reducerActions,
+  reducers: {
+    ...reducerActions,
+    resetCurrMovieState: (state: IInitialState) => {
+      state.currMovie = null;
+    },
+  },
 });
 
 /**
@@ -17,7 +23,7 @@ const applicationSlice = createSlice({
  * - Action creators for each of the different functions defined in the reducer field
  */
 // Exporting actions
-export const { initializeList, addMovieToSelectedState } =
+export const { initializeList, addMovieToSelectedState, resetCurrMovieState } =
   applicationSlice.actions;
 
 // Exporting reducer

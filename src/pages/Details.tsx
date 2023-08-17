@@ -1,10 +1,21 @@
 import { Navigate } from "react-router-dom";
 import { env } from "../environment";
 import { Selector } from "../store";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { resetCurrMovieState } from "../store/Features/applicationSlice/applicationSlice";
 
 const Details = () => {
   const movie = Selector((state) => state.applicationSlice.currMovie);
-  if (!movie) return <Navigate to="/" />;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetCurrMovieState());
+    };
+  }, []);
+
+  if (!movie) return <Navigate to="/" replace={true} />;
   return (
     <div className="flex gap-2 w-[70%] mx-auto">
       <div className="h-60 w-56">
