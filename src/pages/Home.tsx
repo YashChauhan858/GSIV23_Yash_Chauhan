@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { MovieCard } from "../components";
 
 const Home = () => {
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data /* fetchNextPage */ } = useInfiniteQuery({
     queryKey: ["upcoming-movies"],
     getNextPageParam: (lastPage) => {
       const { page, total_pages } = (lastPage as any).data;
@@ -16,20 +16,22 @@ const Home = () => {
   console.log({ data });
 
   return (
-    <div className="flex flex-col">
-      {!!data &&
-        data.pages.map((page: any) => (
-          <Fragment key={page.data.page}>
-            {!!page &&
-              page.data.results.length !== 0 &&
-              page.data.results.map((movie: any) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-          </Fragment>
-        ))}
-      <button type="button" onClick={() => fetchNextPage()}>
+    <div className="">
+      <div className="w-[90%] mx-auto grid grid-rows-3 grid-cols-7 gap-5 pb-8">
+        {!!data &&
+          data.pages.map((page: any) => (
+            <Fragment key={page.data.page}>
+              {!!page &&
+                page.data.results.length !== 0 &&
+                page.data.results.map((movie: any) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+            </Fragment>
+          ))}
+      </div>
+      {/* <button type="button" onClick={() => fetchNextPage()}>
         fetch
-      </button>
+      </button> */}
     </div>
   );
 };
