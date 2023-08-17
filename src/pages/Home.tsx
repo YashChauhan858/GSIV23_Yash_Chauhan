@@ -12,10 +12,11 @@ const Home = () => {
   const list = Selector((state) => state.applicationSlice.list);
   const searchState = Selector((state) => state.applicationSlice.searchState);
 
-  const validList =
-    list.filter((e) =>
-      e.title.toLocaleLowerCase().includes(searchState.toLocaleLowerCase())
-    ) ?? [];
+  const filteredList = list.filter((e) =>
+    e.title.toLocaleLowerCase().includes(searchState.toLocaleLowerCase())
+  );
+
+  const validList = filteredList.length !== 0 ? filteredList : list;
 
   const { hasNextPage, fetchNextPage } = useInfiniteQuery<IResponse>({
     queryKey: ["upcoming-movies"],
@@ -52,7 +53,7 @@ const Home = () => {
       observer.unobserve(el);
     };
   }, [loadMoreButtonRef.current, hasNextPage]);
-
+  console.log({ validList });
   return (
     <div className="">
       <div className="w-[60%] mx-auto grid grid-rows-4 grid-cols-5 gap-5 pb-8">
