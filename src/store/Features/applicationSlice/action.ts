@@ -12,7 +12,15 @@ const initializeList = (
   state.list = [...state.list, ...listToAppend];
 };
 
+const addMovieToSelectedState = (
+  state: IInitialState,
+  actions: PayloadAction<IMovie>
+) => {
+  const movie = actions.payload;
+  state.currMovie = movie;
+};
+
 // Exporting all actions
-const reducerActions = { initializeList };
+const reducerActions = { initializeList, addMovieToSelectedState };
 
 export default reducerActions;

@@ -1,9 +1,23 @@
+import { useNavigate } from "react-router-dom";
 import { env } from "../../environment";
 import { IMovie } from "../../types/movei.type";
+import { addMovieToSelectedState } from "../../store/Features/applicationSlice/applicationSlice";
+import { useDispatch } from "react-redux";
 
 const MovieCard = ({ movie }: { movie: IMovie }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const selectMoveAndNavigate = () => {
+    dispatch(addMovieToSelectedState(movie));
+    navigate("/details");
+  };
+
   return (
-    <div className="w-44 rounded-md shadow-md shadow-[rgba(0,0,0,0.5)] cursor-pointer group">
+    <div
+      className="w-44 rounded-md shadow-md shadow-[rgba(0,0,0,0.5)] cursor-pointer group"
+      onClick={selectMoveAndNavigate}
+    >
       <div className="h-40 overflow-hidden">
         <img
           src={`${env.IMAGE_PATH}/${movie.poster_path}`}
