@@ -1,5 +1,5 @@
 export interface IResponse {
-  data: { result: IMovie[] };
+  data: { results: IMovie[] };
 }
 
 export interface IMovie {
