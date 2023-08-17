@@ -2,12 +2,12 @@ import { env } from "../../environment";
 
 const MovieCard = ({ movie }: { movie: any }) => {
   return (
-    <div className="w-44 rounded-md shadow-md shadow-[rgba(0,0,0,0.5)]">
-      <div className="h-40">
+    <div className="w-44 rounded-md shadow-md shadow-[rgba(0,0,0,0.5)] cursor-pointer group">
+      <div className="h-40 overflow-hidden">
         <img
           src={`${env.IMAGE_PATH}/${movie.poster_path}`}
           alt="movie-poster"
-          className="h-full w-full object-cover rounded-tr-md rounded-tl-md"
+          className="h-full w-full object-cover rounded-tr-md rounded-tl-md group-hover:scale-125 transition-all duration-200"
         />
       </div>
       <div className="flex flex-col p-1">
