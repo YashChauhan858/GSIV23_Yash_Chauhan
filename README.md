@@ -10,6 +10,8 @@ This project is a two-page application built using the following stack
 
 It allows users to view upcoming movies in a grid view, search for movies, and navigate to detailed pages for more information about selected movies.
 
+[Deployed version of the application](https://64de073011c6cf6da3b9cec8--iridescent-hotteok-8bc2fc.netlify.app/)
+
 ## Getting Started
 
 To run the project locally:
