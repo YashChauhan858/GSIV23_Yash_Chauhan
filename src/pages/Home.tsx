@@ -16,7 +16,7 @@ const Home = () => {
     e.title.toLocaleLowerCase().includes(searchState.toLocaleLowerCase())
   );
 
-  const validList = filteredList.length !== 0 ? filteredList : list;
+  const validList = filteredList.length !== 0 ? filteredList : [];
 
   const { hasNextPage, fetchNextPage } = useInfiniteQuery<IResponse>({
     queryKey: ["upcoming-movies"],
@@ -24,6 +24,7 @@ const Home = () => {
       const { page, total_pages } = (lastPage as any).data;
       return page < total_pages ? page + 1 : undefined;
     },
+    refetchOnWindowFocus: false,
     queryFn: ({ pageParam = 1 }) => fetchAllUpComingMovies(pageParam),
     onSuccess: (data) => {
       if (data.pages.at(-1))
@@ -53,7 +54,7 @@ const Home = () => {
       observer.unobserve(el);
     };
   }, [loadMoreButtonRef.current, hasNextPage]);
-  console.log({ validList });
+
   return (
     <div className="">
       <div className="w-[60%] mx-auto grid grid-rows-4 grid-cols-5 gap-5 pb-8">
