@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Home } from "./pages";
+import { Details, Home } from "./pages";
 import { SearchComponent } from "./components";
 import { AiFillHome } from "react-icons/ai";
 
@@ -12,6 +12,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/details" element={<Details />} />
       </Routes>
     </div>
   );
